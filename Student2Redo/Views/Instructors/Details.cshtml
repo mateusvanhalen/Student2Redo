@@ -1,4 +1,4 @@
-﻿@model Student2Redo.Models.Instructor
+﻿@model Student2Redo.Models.ViewModels.InstructorDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,44 +11,38 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.instructor.FirstName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.instructor.FirstName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.instructor.LastName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.instructor.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.instructor.SlackHandle)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.instructor.SlackHandle)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.SlackHandle)
+            @Html.DisplayNameFor(model => model.instructor.Specialty)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SlackHandle)
+            @Html.DisplayFor(model => model.instructor.Specialty)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Specialty)
+            @Html.DisplayNameFor(model => model.instructor.Cohort.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Specialty)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CohortId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CohortId)
+            @Html.DisplayFor(model => model.instructor.Cohort.Name)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.instructor.Id}) |*@
     <a asp-action="Index">Back to List</a>
 </div>

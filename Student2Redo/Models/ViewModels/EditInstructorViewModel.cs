@@ -7,5 +7,6 @@ namespace Student2Redo.Models.ViewModels
 {
     public class EditInstructorViewModel
     {
+
     }
 }

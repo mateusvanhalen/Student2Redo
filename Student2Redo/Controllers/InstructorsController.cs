@@ -53,27 +53,39 @@ namespace Student2Redo.Controllers
                 }
             }
 
-            // GET: Cohorts/Details/5
-            public async Task<ActionResult> Details(int id)
-            {
-                string sql = $@"
-            SELECT
+        // GET: Instructor/Details/5
+
+        public async Task<ActionResult> Details(int id)
+        {
+            string sql = $@"
+                   SELECT
                         i.Id,
                         i.FirstName,
                         i.LastName,
                         i.SlackHandle,
                         i.Specialty,
-                        i.CohortId
+                        i.CohortId,
+                        c.Id,
+                        c.Name
             FROM Instructor i
-            WHERE s.Id = {id}
-            ";
-
-                using (IDbConnection conn = Connection)
+                JOIN Cohort c ON c.Id = i.CohortId
+            WHERE i.Id = {id}
+                ";
+                
+                
+       using (IDbConnection conn = Connection)
+            {
+                InstructorDetailViewModel model = new InstructorDetailViewModel();
+                conn.Query<Instructor, Cohort, Instructor>(sql, (generatedInstructor, generatedCohort) =>
                 {
-                    Instructor instructor = await conn.QueryFirstAsync<Instructor>(sql);
-                    return View(instructor);
-                }
+                    generatedInstructor.Cohort = generatedCohort;
+               
+                model.instructor = generatedInstructor;
+                    return generatedInstructor;
+                });
+                return View(model);
             }
+        }
 
         // GET: Instructors/Create
         public ActionResult Create()
