@@ -11,7 +11,7 @@ namespace Student2Redo.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string SlackHandle { get; set; }
-        public string Speciailty { get; set; }
+        public string Specialty { get; set; }
         public string CohortId { get; set; }
     }
 }

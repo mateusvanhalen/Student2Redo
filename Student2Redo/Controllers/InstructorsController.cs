@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Student2Redo.Models;
 using Student2Redo.Models.ViewModels;
-//using Student2Redo.Models.ViewModels;
+
 
 namespace Student2Redo.Controllers
 {
@@ -76,30 +76,34 @@ namespace Student2Redo.Controllers
             }
 
         // GET: Instructors/Create
-        public async Task<IActionResult> Create()
+        public ActionResult Create()
         {
-            List<SelectListItem> allCohorts = await GetAllCohorts();
-            CreateInstructorViewModel viewmodel = new CreateInstructorViewModel
-            {
-                Cohorts = allCohorts
-            };
-            return View(viewmodel);
+            var model = new CreateInstructorViewModel(_config);
+            return View(model);
         }
 
         // POST: Instructors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateInstructorViewModel viewmodel)
         {
-            try
-            {
-                // TODO: Add insert logic here
+           
+                string sql = $@"INSERT INTO Instructor (
+                                    FirstName, LastName, SlackHandle, CohortId, Specialty
+                                ) VALUES (
+                                    '{viewmodel.instructor.FirstName}', 
+                                    '{viewmodel.instructor.LastName}',
+                                    '{viewmodel.instructor.SlackHandle}', 
+                                    '{viewmodel.instructor.CohortId}',
+                                    '{viewmodel.instructor.Specialty}'
+                                );";
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            using (IDbConnection conn = Connection)
             {
-                return View();
+
+              
+                var newId = await conn.ExecuteAsync(sql);
+                return RedirectToAction(nameof(Index));
             }
         }
 

@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.SlackHandle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Speciailty)
+                @Html.DisplayNameFor(model => model.Specialty)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CohortId)
@@ -49,13 +49,13 @@
                 @Html.DisplayFor(modelItem => item.SlackHandle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Speciailty)
+                @Html.DisplayFor(modelItem => item.Specialty)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CohortId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
