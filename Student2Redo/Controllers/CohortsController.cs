@@ -1,93 +1,197 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Student2Redo.Models;
+using Student2Redo.Models.ViewModels;
+//using StudentExercisesAPI.Data;
 
 namespace Student2Redo.Controllers
 {
+
     public class CohortsController : Controller
     {
-        // GET: Cohorts
-        public ActionResult Index()
+        private readonly IConfiguration _config;
+
+        public CohortsController(IConfiguration config)
         {
-            return View();
+            _config = config;
+        }
+
+        public IDbConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            }
+        }
+
+        // GET: Cohort
+        public async Task<ActionResult> Index()
+        {
+            using (IDbConnection conn = Connection)
+            {
+
+                IEnumerable<Cohort> cohorts = await conn.QueryAsync<Cohort>(@"
+                    SELECT 
+                        c.Id,
+                        c.Name
+         
+                    FROM Cohort c
+                ");
+                return View(cohorts);
+            }
         }
 
         // GET: Cohorts/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
-        }
+            string sql = $@"
+            SELECT
+                c.Id,
+                c.Name,
+            FROM Cohort c
+            WHERE s.Id = {id}
+            ";
 
-        // GET: Cohorts/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Cohorts/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            using (IDbConnection conn = Connection)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                Cohort cohort = await conn.QueryFirstAsync<Cohort>(sql);
+                return View(cohort);
             }
         }
 
-        // GET: Cohorts/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: Students/Create
+        //public ActionResult Create()
+        //{
+        //    var model = new StudentCreateViewModel(_config);
+        //    return View(model);
+        //}
 
-        // POST: Cohorts/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// POST: Students/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Create(StudentCreateViewModel model)
+        //{
+        //    string sql = $@"INSERT INTO Student 
+        //    (FirstName, LastName, SlackHandle, CohortId)
+        //    VALUES
+        //    (
+        //        '{model.student.FirstName}'
+        //        ,'{model.student.LastName}'
+        //        ,'{model.student.SlackHandle}'
+        //        ,{model.student.CohortId}
+        //    );";
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //    using (IDbConnection conn = Connection)
+        //    {
+        //        var newId = await conn.ExecuteAsync(sql);
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-        // GET: Cohorts/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //}
 
-        // POST: Cohorts/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// GET: Students/Edit/5
+        //[HttpGet]
+        //public async Task<ActionResult> Edit(int id)
+        //{
+        //    string sql = $@"
+        //    SELECT
+        //        s.Id,
+        //        s.FirstName,
+        //        s.LastName,
+        //        s.SlackHandle,
+        //        s.CohortId
+        //    FROM Student s
+        //    WHERE s.Id = {id}
+        //    ";
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        //    using (IDbConnection conn = Connection)
+        //    {
+        //        Student student = await conn.QueryFirstAsync<Student>(sql);
+        //        StudentEditViewModel model = new StudentEditViewModel(_config);
+        //        model.student = student;
+        //        return View(model);
+        //    }
+        //}
+
+        //// POST: Students/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit(int id, StudentEditViewModel model)
+        //{
+        //    try
+        //    {
+        //        Student student = model.student;
+
+        //        // TODO: Add update logic here
+        //        string sql = $@"
+        //            UPDATE Student
+        //            SET FirstName = '{student.FirstName}',
+        //                LastName = '{student.LastName}',
+        //                SlackHandle = '{student.SlackHandle}',
+        //                CohortId = {student.CohortId}
+        //            WHERE Id = {id}";
+
+        //        using (IDbConnection conn = Connection)
+        //        {
+        //            int rowsAffected = await conn.ExecuteAsync(sql);
+        //            if (rowsAffected > 0)
+        //            {
+        //                return RedirectToAction(nameof(Index));
+        //            }
+        //            return BadRequest();
+
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //// GET: Students/Delete/5
+        //public async Task<ActionResult> DeleteConfirm(int id)
+        //{
+        //    string sql = $@"
+        //    SELECT
+        //        s.Id,
+        //        s.FirstName,
+        //        s.LastName,
+        //        s.SlackHandle,
+        //        s.CohortId
+        //    FROM Student s
+        //    WHERE s.Id = {id}
+        //    ";
+
+        //    using (IDbConnection conn = Connection)
+        //    {
+        //        Student student = await conn.QueryFirstAsync<Student>(sql);
+        //        return View(student);
+        //    }
+        //}
+
+        //// POST: Students/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Delete(int id)
+        //{
+        //    string sql = $@"DELETE FROM Student WHERE Id = {id}";
+
+        //    using (IDbConnection conn = Connection)
+        //    {
+        //        int rowsAffected = await conn.ExecuteAsync(sql);
+        //        if (rowsAffected > 0)
+        //        {
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        throw new Exception("No rows affected");
+        //    }
         }
     }
-}
