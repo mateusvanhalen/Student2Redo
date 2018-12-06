@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Student2Redo.Models;
 using Student2Redo.Models.ViewModels;
 
-
 namespace Student2Redo.Controllers
 {
     public class InstructorsController : Controller
@@ -72,7 +71,6 @@ namespace Student2Redo.Controllers
             WHERE i.Id = {id}
                 ";
                 
-                
        using (IDbConnection conn = Connection)
             {
                 InstructorDetailViewModel model = new InstructorDetailViewModel();
@@ -125,24 +123,30 @@ namespace Student2Redo.Controllers
             return View();
         }
 
-        //// POST: Instructors/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
+        //public async Task<ActionResult> Edit(int id, EditInstructorViewModel model)
         //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
+        //    string sql = $@"
+        //    SELECT
+        //        s.Id,
+        //        s.FirstName,
+        //        s.LastName,
+        //        s.SlackHandle,
+        //        s.CohortId
+        //    FROM Student s
+        //    WHERE s.Id = {id}
+        //    ";
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
+        //    using (IDbConnection conn = Connection)
         //    {
-        //        return View();
+        //        Instructor instructor = await conn.QueryFirstAsync<Instructor>(sql);
+        //        EditInstructorViewModel model = new EditInstructorViewModel(_config);
+        //        model.instructor = instructor;
+        //        return View(model);
         //    }
         //}
-
-        //// GET: Instructors/Delete/5
+        ////// GET: Instructors/Delete/5
         //public ActionResult Delete(int id)
         //{
         //    return View();

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace Student2Redo.Models.ViewModels
 {
-    public class EditInstructorViewModel
+    public class StudentDetailViewModel
     {
-        public Cohort cohort { get; set; }
-        public Instructor instructor { get; set; }
 
-        public EditInstructorViewModel() { }
+        public Cohort cohort { get; set; }
+        public Student student { get; set; }
+
+        public StudentDetailViewModel() { }
+
 
     }
 }

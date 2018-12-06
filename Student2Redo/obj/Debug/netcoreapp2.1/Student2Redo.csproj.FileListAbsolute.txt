@@ -73,3 +73,6 @@ C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razo
 C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Instructors\Details.g.cshtml.cs
 C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Instructors\Edit.g.cshtml.cs
 C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Instructors\Index.g.cshtml.cs
+C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Students\Create.g.cshtml.cs
+C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Students\Index.g.cshtml.cs
+C:\Users\mateus\workspace\Student2Redo\Student2Redo\obj\Debug\netcoreapp2.1\Razor\Views\Students\Details.g.cshtml.cs

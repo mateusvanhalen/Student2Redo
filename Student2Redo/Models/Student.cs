@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Student2Redo.Models
 {
-    public class Student    {
+    public class Student {
         public int Id { get; set; }
 
         [Display(Name = "First Name")]
@@ -18,6 +18,9 @@ namespace Student2Redo.Models
 
         [Display(Name = "How to find me on Slack")]
         public string SlackHandle { get; set; }
+
+        [Display(Name = "Durpity Durp Durp")]
+        public string CohortId { get; set; }
         public Cohort Cohort { get; set; }
     }
 }
