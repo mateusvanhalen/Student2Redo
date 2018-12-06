@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Student2Redo.Models;
 using Student2Redo.Models.ViewModels;
+using Student2Redo.Models.ViewModels;
 
 namespace Student2Redo.Controllers
 {
@@ -114,21 +115,57 @@ namespace Student2Redo.Controllers
             }
         }
         // GET: Students/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            string sql = $@"
+            SELECT
+                s.Id,
+                s.FirstName,
+                s.LastName,
+                s.SlackHandle,
+                s.CohortId
+            FROM Student s
+            WHERE s.Id = {id}
+            ";
+
+            using (IDbConnection conn = Connection)
+            {
+                Student student = await conn.QueryFirstAsync<Student>(sql);
+                StudentEditViewModel model = new StudentEditViewModel(_config);
+                model.student = student;
+                return View(model);
+            }
         }
 
         // POST: Students/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, StudentEditViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                Student student = model.student;
 
-                return RedirectToAction(nameof(Index));
+                // TODO: Add update logic here
+                string sql = $@"
+                    UPDATE Student
+                    SET FirstName = '{student.FirstName}',
+                        LastName = '{student.LastName}',
+                        SlackHandle = '{student.SlackHandle}',
+                        CohortId = {student.CohortId}
+                    WHERE Id = {id}";
+
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    return BadRequest();
+
+                }
             }
             catch
             {

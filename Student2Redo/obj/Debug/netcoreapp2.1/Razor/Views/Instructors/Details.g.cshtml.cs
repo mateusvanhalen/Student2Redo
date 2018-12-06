@@ -166,7 +166,7 @@ using Student2Redo.Models;
             WriteLiteral("    ");
             EndContext();
             BeginContext(1306, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac2536924c2c4aca86c40d55d3d03a56", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "969705dbb8074d92b6dc6e60cb74c153", async() => {
                 BeginContext(1328, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();
